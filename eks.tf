@@ -1,6 +1,7 @@
 resource "aws_eks_cluster" "this" {
   name     = local.resource_name
   role_arn = aws_iam_role.this.arn
+  tags     = local.tags
 
   vpc_config {
     subnet_ids = local.private_subnet_ids
