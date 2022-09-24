@@ -1,7 +1,7 @@
 org_name: nullstone
 name: aws-eks-fargate
-friendly_name: EKS Fargate Cluster
-description: Creates an AWS EKS (Elastic Kubernetes) cluster using the Fargate profile.
+friendly_name: Kubernetes Cluster (EKS Fargate)
+description: Creates a standard Kubernetes cluster using AWS EKS and self-managed with Fargate
 category: cluster
 subcategory: ""
 provider_types:

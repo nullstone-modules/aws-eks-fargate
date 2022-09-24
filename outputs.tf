@@ -1,3 +1,8 @@
+output "cluster_logs_group" {
+  value       = module.logs.name
+  description = "string ||| The name of the Cloudwatch log group containing EKS Control Plane logs."
+}
+
 output "cluster_arn" {
   value       = aws_eks_cluster.this.arn
   description = "string ||| AWS Arn for EKS Fargate cluster."
