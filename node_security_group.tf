@@ -1,3 +1,4 @@
+// See https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html
 resource "aws_security_group" "node" {
   vpc_id      = local.vpc_id
   name        = "${local.resource_name} Node"
@@ -88,4 +89,14 @@ resource "aws_security_group_rule" "node-https-from-self" {
   from_port         = 443
   to_port           = 443
   self              = true
+}
+
+resource "aws_security_group_rule" "node-to-world-ipv4" {
+  description       = "Allow node to reach world for cluster introspection and node registration"
+  security_group_id = aws_security_group.node.id
+  type              = "egress"
+  protocol          = "tcp"
+  from_port         = 0
+  to_port           = 0
+  cidr_blocks       = ["0.0.0.0/0"]
 }

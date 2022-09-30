@@ -12,6 +12,7 @@ resource "aws_eks_cluster" "this" {
     }
   }
 
+  #bridgecrew:skip=BC_AWS_KUBERNETES_1:Cluster security group is restricted in aws_security_group.node
   #bridgecrew:skip=BC_AWS_KUBERNETES_2:Enabling Nullstone to provision/deploy into Kubernetes cluster
   vpc_config {
     endpoint_public_access = true
