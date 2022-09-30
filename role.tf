@@ -28,6 +28,7 @@ resource "aws_iam_policy" "this" {
 }
 
 data "aws_iam_policy_document" "this" {
+  #bridgecrew:skip=BC_AWS_IAM_57:Kubernetes needs to create and manage load balancers and put metric data across many resources
   statement {
     sid       = "EnableMetrics"
     effect    = "Allow"
