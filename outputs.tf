@@ -27,3 +27,8 @@ output "fargate_namespace" {
   value       = "default"
   description = "string ||| Namespace selector for default fargate profile."
 }
+
+output "cluster_openid_provider_arn" {
+  value       = aws_iam_openid_connect_provider.this.arn
+  description = "string ||| ARN of the OpenID Connect Provider that is used to provide IAM roles with Kubernetes Service Accounts"
+}
