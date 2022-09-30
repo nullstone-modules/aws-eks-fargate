@@ -12,9 +12,11 @@ resource "aws_eks_cluster" "this" {
     }
   }
 
+  #bridgecrew:skip=BC_AWS_KUBERNETES_2:Enabling Nullstone to provision/deploy into Kubernetes cluster
   vpc_config {
-    subnet_ids             = local.private_subnet_ids
     endpoint_public_access = true
+    subnet_ids             = local.private_subnet_ids
+    security_group_ids     = [aws_security_group.node.id]
   }
 
   timeouts {

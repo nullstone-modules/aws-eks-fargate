@@ -32,3 +32,8 @@ output "cluster_openid_provider_arn" {
   value       = aws_iam_openid_connect_provider.this.arn
   description = "string ||| ARN of the OpenID Connect Provider that is used to provide IAM roles with Kubernetes Service Accounts"
 }
+
+output "node_security_group_id" {
+  value       = aws_security_group.node.id
+  description = "string ||| ID of the Security Group that is applied to each node in the EKS cluster. This limits traffic inside the network."
+}
