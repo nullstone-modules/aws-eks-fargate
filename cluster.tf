@@ -4,6 +4,14 @@ resource "aws_eks_cluster" "this" {
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   tags                      = local.tags
 
+  encryption_config {
+    resources = ["secrets"]
+
+    provider {
+      key_arn = aws_kms_key.this.arn
+    }
+  }
+
   vpc_config {
     subnet_ids             = local.private_subnet_ids
     endpoint_public_access = true
