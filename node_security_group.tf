@@ -5,9 +5,8 @@ resource "aws_security_group" "node" {
   description = "Security Group for EKS Nodes"
 
   tags = merge(local.tags, {
-    "Name"                                         = "${local.resource_name}-node"
+    Name                                           = "${local.resource_name}-node"
     "kubernetes.io/cluster/${local.resource_name}" = "owned"
-    "aws:eks:cluster-name"                         = local.resource_name
   })
 }
 
