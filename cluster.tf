@@ -1,5 +1,6 @@
 resource "aws_eks_cluster" "this" {
   name                      = local.resource_name
+  version                   = var.kubernetes_version
   role_arn                  = aws_iam_role.this.arn
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   tags                      = local.tags
