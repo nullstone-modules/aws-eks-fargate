@@ -5,6 +5,6 @@ module "logs" {
   name              = "/aws/eks/${local.resource_name}/cluster"
   tags              = local.tags
   enable_log_reader = true
-  retention_in_days = 7
+  retention_in_days = var.log_retention_in_days
   kms_key_arn       = aws_kms_key.this.arn
 }
