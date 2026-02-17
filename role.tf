@@ -1,8 +1,7 @@
 resource "aws_iam_role" "this" {
-  name                  = local.resource_name
-  assume_role_policy    = data.aws_iam_policy_document.this_assume.json
-  force_detach_policies = true
-  tags                  = local.tags
+  name               = local.resource_name
+  assume_role_policy = data.aws_iam_policy_document.this_assume.json
+  tags               = local.tags
 }
 
 data "aws_iam_policy_document" "this_assume" {
@@ -19,33 +18,6 @@ data "aws_iam_policy_document" "this_assume" {
       ]
     }
   }
-}
-
-resource "aws_iam_policy" "this" {
-  name   = "${local.resource_name}-cluster_role"
-  policy = data.aws_iam_policy_document.this.json
-  tags   = local.tags
-}
-
-data "aws_iam_policy_document" "this" {
-  #bridgecrew:skip=BC_AWS_IAM_57:Kubernetes needs to create and manage load balancers and put metric data across many resources
-  statement {
-    sid       = "EnableMetrics"
-    effect    = "Allow"
-    resources = ["*"]
-    actions   = ["cloudwatch:PutMetricData"]
-  }
-  statement {
-    sid       = "EnableLoadBalancing"
-    effect    = "Allow"
-    resources = ["*"]
-    actions   = ["elasticloadbalancing:*"]
-  }
-}
-
-resource "aws_iam_role_policy_attachment" "this" {
-  policy_arn = aws_iam_policy.this.arn
-  role       = aws_iam_role.this.name
 }
 
 resource "aws_iam_role_policy_attachment" "this_basic" {

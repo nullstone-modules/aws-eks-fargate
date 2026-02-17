@@ -1,9 +1,16 @@
 resource "aws_eks_cluster" "this" {
-  name                      = local.resource_name
-  version                   = var.kubernetes_version
-  role_arn                  = aws_iam_role.this.arn
-  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  tags                      = local.tags
+  name     = local.resource_name
+  role_arn = aws_iam_role.this.arn
+  version  = var.kubernetes_version
+  tags     = local.tags
+
+  enabled_cluster_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler",
+  ]
 
   encryption_config {
     resources = ["secrets"]
@@ -16,9 +23,10 @@ resource "aws_eks_cluster" "this" {
   #bridgecrew:skip=BC_AWS_KUBERNETES_1:Cluster security group is restricted in aws_security_group.node
   #bridgecrew:skip=BC_AWS_KUBERNETES_2:Enabling Nullstone to provision/deploy into Kubernetes cluster
   vpc_config {
-    endpoint_public_access = true
-    subnet_ids             = local.private_subnet_ids
-    security_group_ids     = [aws_security_group.node.id]
+    endpoint_public_access  = true
+    endpoint_private_access = false
+    subnet_ids              = local.private_subnet_ids
+    security_group_ids      = [aws_security_group.node.id]
   }
 
   timeouts {
@@ -27,7 +35,8 @@ resource "aws_eks_cluster" "this" {
 
   depends_on = [
     module.logs,
-    aws_iam_role_policy_attachment.this,
-    aws_iam_role_policy_attachment.this_service
+    aws_iam_role_policy_attachment.this_basic,
+    aws_iam_role_policy_attachment.this_service,
+    aws_iam_role_policy_attachment.this_vpc,
   ]
 }
