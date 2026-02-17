@@ -24,7 +24,7 @@ output "cluster_ca_certificate" {
 }
 
 output "fargate_namespace" {
-  value       = "default"
+  value       = local.default_namespace
   description = "string ||| Namespace selector for default fargate profile."
 }
 
