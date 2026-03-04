@@ -6,8 +6,8 @@ category: cluster
 subcategory: ""
 provider_types:
     - aws
-platform: eks
-subplatform: fargate
+platform: k8s
+subplatform: eks
 type: ""
 appCategories: []
 is_public: true
