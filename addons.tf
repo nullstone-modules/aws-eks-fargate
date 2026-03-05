@@ -8,6 +8,10 @@ resource "aws_eks_addon" "secrets" {
   addon_version               = null
   resolve_conflicts_on_update = "PRESERVE"
   tags                        = local.tags
+
+  timeouts {
+    create = "30m"
+  }
 }
 
 resource "aws_eks_addon" "efs" {
@@ -16,4 +20,8 @@ resource "aws_eks_addon" "efs" {
   addon_version               = null
   resolve_conflicts_on_update = "PRESERVE"
   tags                        = local.tags
+
+  timeouts {
+    create = "30m"
+  }
 }
