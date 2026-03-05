@@ -4,6 +4,39 @@ resource "aws_eks_cluster" "this" {
   version  = var.kubernetes_version
   tags     = local.tags
 
+  access_config {
+    authentication_mode = "API"
+  }
+
+  bootstrap_self_managed_addons = false
+
+  dynamic "compute_config" {
+    for_each = var.enable_auto_mode ? [1] : []
+    content {
+      enabled       = true
+      node_pools    = ["general-purpose"]
+      node_role_arn = aws_iam_role.node[0].arn
+    }
+  }
+
+  dynamic "storage_config" {
+    for_each = var.enable_auto_mode ? [1] : []
+    content {
+      block_storage {
+        enabled = true
+      }
+    }
+  }
+
+  dynamic "kubernetes_network_config" {
+    for_each = var.enable_auto_mode ? [1] : []
+    content {
+      elastic_load_balancing {
+        enabled = true
+      }
+    }
+  }
+
   enabled_cluster_log_types = [
     "api",
     "audit",
@@ -38,5 +71,7 @@ resource "aws_eks_cluster" "this" {
     aws_iam_role_policy_attachment.this_basic,
     aws_iam_role_policy_attachment.this_service,
     aws_iam_role_policy_attachment.this_vpc,
+    aws_iam_role_policy_attachment.node_minimal,
+    aws_iam_role_policy_attachment.node_ecr,
   ]
 }

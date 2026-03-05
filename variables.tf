@@ -1,3 +1,12 @@
+variable "enable_auto_mode" {
+  type        = bool
+  default     = true
+  description = <<EOF
+Enable EKS Auto Mode, which allows EKS to manage compute, storage, and load balancing for the cluster.
+When enabled, EKS provisions and manages EC2 nodes automatically using the general-purpose node pool.
+EOF
+}
+
 variable "kubernetes_version" {
   type        = string
   default     = "1.35"

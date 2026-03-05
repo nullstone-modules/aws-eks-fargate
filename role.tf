@@ -36,3 +36,36 @@ resource "aws_iam_role_policy_attachment" "this_vpc" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.this.name
 }
+
+# Node IAM role for EKS Auto Mode
+resource "aws_iam_role" "node" {
+  count              = var.enable_auto_mode ? 1 : 0
+  name               = "${local.resource_name}-node"
+  assume_role_policy = data.aws_iam_policy_document.node_assume.json
+  tags               = local.tags
+}
+
+data "aws_iam_policy_document" "node_assume" {
+  statement {
+    sid     = "AssumeEC2"
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "node_minimal" {
+  count      = var.enable_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodeMinimalPolicy"
+  role       = aws_iam_role.node[0].name
+}
+
+resource "aws_iam_role_policy_attachment" "node_ecr" {
+  count      = var.enable_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
+  role       = aws_iam_role.node[0].name
+}
