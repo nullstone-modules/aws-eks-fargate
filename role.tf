@@ -8,7 +8,7 @@ data "aws_iam_policy_document" "this_assume" {
   statement {
     sid     = "AssumeEKS"
     effect  = "Allow"
-    actions = ["sts:AssumeRole"]
+    actions = ["sts:AssumeRole", "sts:TagSession"]
 
     principals {
       type = "Service"
@@ -68,4 +68,30 @@ resource "aws_iam_role_policy_attachment" "node_ecr" {
   count      = var.enable_auto_mode ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
   role       = aws_iam_role.node[0].name
+}
+
+# Required managed policies for EKS Auto Mode on the cluster role
+# Reference: https://docs.aws.amazon.com/eks/latest/userguide/auto-cluster-iam-role.html
+resource "aws_iam_role_policy_attachment" "this_eks_block_storage" {
+  count      = var.enable_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSBlockStoragePolicy"
+  role       = aws_iam_role.this.name
+}
+
+resource "aws_iam_role_policy_attachment" "this_eks_compute" {
+  count      = var.enable_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSComputePolicy"
+  role       = aws_iam_role.this.name
+}
+
+resource "aws_iam_role_policy_attachment" "this_eks_load_balancing" {
+  count      = var.enable_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
+  role       = aws_iam_role.this.name
+}
+
+resource "aws_iam_role_policy_attachment" "this_eks_networking" {
+  count      = var.enable_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy"
+  role       = aws_iam_role.this.name
 }
