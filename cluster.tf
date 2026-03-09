@@ -5,7 +5,7 @@ resource "aws_eks_cluster" "this" {
   tags     = local.tags
 
   access_config {
-    authentication_mode = "API"
+    authentication_mode = "API_AND_CONFIG_MAP" # TODO: Harden to API once platform/catalog supports
   }
 
   bootstrap_self_managed_addons = false
