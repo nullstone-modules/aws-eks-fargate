@@ -14,3 +14,9 @@ locals {
   block_name    = data.ns_workspace.this.block_name
   resource_name = "${data.ns_workspace.this.block_ref}-${random_string.resource_suffix.result}"
 }
+
+data "ns_agent" "this" {}
+
+locals {
+  ns_agent_user_arn = data.ns_agent.this.aws_user_arn
+}
