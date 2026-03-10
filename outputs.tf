@@ -24,8 +24,13 @@ output "cluster_ca_certificate" {
 }
 
 output "fargate_namespace" {
-  value       = "default"
+  value       = local.default_namespace
   description = "string ||| Namespace selector for default fargate profile."
+}
+
+output "cluster_oidc_issuer" {
+  value       = local.cluster_cert_issuer
+  description = "string ||| Cluster certificate issuer used by OpenID Connect Provider"
 }
 
 output "cluster_openid_provider_arn" {

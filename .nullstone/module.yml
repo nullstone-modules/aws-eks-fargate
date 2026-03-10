@@ -6,8 +6,11 @@ category: cluster
 subcategory: ""
 provider_types:
     - aws
-platform: eks
-subplatform: fargate
+platform: k8s
+subplatform: eks
 type: ""
 appCategories: []
 is_public: true
+tool_name: opentofu
+include: []
+source_url: https://github.com/nullstone-modules/aws-eks-fargate

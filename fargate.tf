@@ -1,3 +1,7 @@
+locals {
+  default_namespace = "default"
+}
+
 resource "aws_eks_fargate_profile" "this" {
   cluster_name           = aws_eks_cluster.this.name
   fargate_profile_name   = local.resource_name
@@ -6,7 +10,7 @@ resource "aws_eks_fargate_profile" "this" {
   tags                   = local.tags
 
   selector {
-    namespace = "default"
+    namespace = local.default_namespace
   }
 }
 
