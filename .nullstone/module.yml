@@ -1,7 +1,7 @@
 org_name: nullstone
-name: aws-eks-fargate
-friendly_name: Kubernetes Cluster (EKS Fargate)
-description: Creates a standard Kubernetes cluster using AWS EKS and self-managed with Fargate
+name: aws-eks-auto
+friendly_name: Kubernetes Cluster (Auto Mode)
+description: Creates a Kubernetes cluster in Standard mode that uses AWS-managed nodes.
 category: cluster
 subcategory: ""
 provider_types:
@@ -13,4 +13,4 @@ appCategories: []
 is_public: true
 tool_name: opentofu
 include: []
-source_url: https://github.com/nullstone-modules/aws-eks-fargate
+source_url: https://github.com/nullstone-modules/aws-eks-auto

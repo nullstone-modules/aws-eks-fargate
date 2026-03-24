@@ -1,6 +1,6 @@
 # aws-eks-auto
 
-Creates a Kubernetes cluster in Auto mode that uses AWS-managed node groups.
+Creates a Kubernetes cluster in Auto mode that uses AWS-managed nodes.
 
 ## When to use?
 
